@@ -1,6 +1,11 @@
+import { Link } from "react-router-dom";
 import { products } from "../data/data";
+import { CartContext } from "../context/CartContext";
+import { useContext } from "react";
 
 const Products = () => {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <section className="products">
       <div className="container">
@@ -8,16 +13,21 @@ const Products = () => {
           Featured <span>Products</span>
         </h2>
         <div className="grid-4">
-          {products.map((product) => (
+          {products.slice(0, 4).map((product) => (
             <div key={product.id} className="product-card">
-              <img src={product.image} alt={product.name} />
+              <Link to={`/product/${product.id}`}>
+                <img src={product.image} alt={product.name} />
+              </Link>
 
               <div className="product-info">
                 <h3>{product.name}</h3>
                 <p>{product.category}</p>
                 <div className="product-footer">
                   <span className="price">${product.price.toFixed(2)}</span>
-                  <button className="add-btn">
+                  <button
+                    className="add-btn"
+                    onClick={() => addToCart(product)}
+                  >
                     <i className="fas fa-cart-plus"></i>
                   </button>
                 </div>

@@ -32,6 +32,46 @@ export const products = [
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
     category: "Fashion",
   },
+  {
+    id: 5,
+    name: "Table Lamp",
+    price: 49.99,
+    image:
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop",
+    category: "Home",
+    description:
+      "Modern LED table lamp with adjustable brightness and elegant design.",
+  },
+  {
+    id: 6,
+    name: "Face Cream",
+    price: 24.99,
+    image:
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop",
+    category: "Beauty",
+    description:
+      "Moisturizing face cream with natural ingredients for glowing skin.",
+  },
+  {
+    id: 7,
+    name: "Bluetooth Speaker",
+    price: 69.99,
+    image:
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
+    category: "Electronics",
+    description:
+      "Portable Bluetooth speaker with rich bass and 12-hour playtime.",
+  },
+  {
+    id: 8,
+    name: "Denim Jacket",
+    price: 89.99,
+    image:
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop",
+    category: "Fashion",
+    description:
+      "Classic denim jacket with a modern fit, perfect for any season.",
+  },
 ];
 
 // ===== Categories =====
