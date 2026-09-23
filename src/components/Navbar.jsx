@@ -60,6 +60,8 @@ const Navbar = () => {
                 gap: 10px;
                 font-size: 1.5rem;
                 font-weight: bold;
+                color: white;
+                text-decoration: none;
             }
 
             .logo i 

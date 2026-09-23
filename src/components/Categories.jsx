@@ -1,4 +1,5 @@
 import { categories } from "../data/data";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   return (
@@ -10,13 +11,13 @@ const Categories = () => {
 
         <div className="grid-4">
           {categories.map((cat) => (
-            <div key={cat.id} className="category-card">
+            <Link to="/shop" key={cat.id} className="category-card">
               <div className="icon-wrapper" style={{ background: cat.color }}>
                 <i className={`fas ${cat.icon}`}></i>
               </div>
               <h3>{cat.name}</h3>
               <p>12 Products</p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -36,6 +37,9 @@ const Categories = () => {
                 border-radius: 10px;
                 transition: 0.3s;
                 cursor: pointer;
+                text-decoration: none;
+                color: var(--primary);
+                display: block;
             }
 
             .category-card:hover 

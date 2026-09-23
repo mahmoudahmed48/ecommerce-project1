@@ -40,7 +40,7 @@ const Shop = () => {
         <div className="grid-4">
           {filtered.map((product) => (
             <div key={product.id} className="product-card">
-              <Link to={`/products/${product.id}`}>
+              <Link to={`/product/${product.id}`}>
                 <img src={product.image} alt={product.name} />
               </Link>
 
@@ -132,6 +132,52 @@ const Shop = () => {
             {
                 font-size: 1rem;
                 margin-bottom: 5px
+            }
+
+            .product-info p
+            {
+              color: #777;
+              font-size: 0.9rem;
+              margin-bottom: 10px;
+            }
+
+            .product-footer
+            {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+
+            .price
+            {
+              font-size: 1.2rem;
+              font-weight: bold;
+              color: var(--secondary)
+            }
+
+            .add-btn
+            {
+              background: var(--secondary);
+              color: white;
+              border: none;
+              padding: 8px 15px;
+              border-radius: 20px;
+              cursor: pointer;
+              transition: 0.3s
+            }
+
+            .add-btn:hover
+            {
+              background: #2980b9;
+              transform: scale(1.05)
+            }
+
+            .no-products
+            {
+              text-align: center;
+              color: #777;
+              font-size: 1.1rem;
+              margin-top: 30px
             }
 
 
