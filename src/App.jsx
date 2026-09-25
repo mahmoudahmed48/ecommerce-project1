@@ -6,6 +6,9 @@ import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Account from "./pages/Account";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
@@ -17,6 +20,16 @@ function App() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
