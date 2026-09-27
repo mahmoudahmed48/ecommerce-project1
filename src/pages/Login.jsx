@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -17,13 +17,13 @@ const Login = () => {
     e.preventDefault();
     setError("");
 
-    if (!form.email || form.password) {
+    if (!form.email || !form.password) {
       setError("Please Fill In All Fields");
       return;
     }
 
-    if (form.password.length < 0) {
-      setError("Password Should Be at Least 6 Charactres");
+    if (form.password.length < 6) {
+      setError("Password Should Be at Least 6 Characters ");
       return;
     }
 
@@ -96,7 +96,7 @@ const Login = () => {
                 border-radius: 10px;
                 box-shadow: var(--shadow);
                 width: 100%;
-                min-width: 420px;
+                max-width: 420px;
             }
 
             .auth-header
@@ -171,6 +171,7 @@ const Login = () => {
                 margin-top: 10px;
                 display: inline-flex;
                 align-items: center;
+                justify-content: center;
                 gap: 10px;
             }
 

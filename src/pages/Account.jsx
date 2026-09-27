@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Account = () => {
   const { user, logout } = useContext(AuthContext);
@@ -34,6 +34,14 @@ const Account = () => {
               <h3>
                 <i className="fas fa-box"></i>Order History
               </h3>
+              {/* ADDED */}
+              <Link to="/orders" className="acc-card">
+                <i className="fas fa-box"></i>
+                <h3>My Orders</h3>
+
+                <p>View your orders history</p>
+              </Link>
+              {/* ADDED */}
               <div className="empty-state">
                 <i className="fas fa-inbox"></i>
                 <p>No orders yet</p>

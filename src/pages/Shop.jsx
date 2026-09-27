@@ -6,9 +6,13 @@ import { Link } from "react-router-dom";
 const Shop = () => {
   const { addToCart } = useContext(CartContext);
   const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
 
-  const filtered =
-    filter === "All" ? products : products.filter((p) => p.category === filter);
+  const filtered = products.filter((p) => {
+    const matchCategory = filter === "All" || p.category === filter;
+    const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
+    return matchCategory && matchSearch;
+  });
 
   return (
     <section className="shop">
@@ -16,6 +20,26 @@ const Shop = () => {
         <h2 className="section-title">
           All <span>Products</span>
         </h2>
+
+        {/* Search Bar */}
+
+        <div className="search-bar">
+          <i className="fas fa-search"></i>
+          <input
+            type="text"
+            placeholder="Search Products"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          {search && (
+            <button onClick={() => setSearch("")} className="clear-btn">
+              <i className="fas fa-times"></i>
+            </button>
+          )}
+        </div>
+
+        {/* Search Bar */}
 
         {/* Filter Buttons */}
         <div className="filter-buttons">
@@ -75,6 +99,57 @@ const Shop = () => {
                 min-height: 60vh;
             }
 
+            .search-bar
+            {
+              display: flex;
+              align-items: center;
+              background: white;
+              border: 1px solid #ddd;
+              border-radius: 30px;
+              padding: 10px 20px;
+              max-width: 500px;
+              margin: 0 auto 25px;
+              transition: 0.3s;
+            }
+
+            .search-bar:focus-within
+            {
+              border-color: var(--secondary);
+              box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15)
+            }
+
+            .search-bar i 
+            {
+              color: #aaa;
+              margin-right: 10px
+            }
+
+            .search-bar input
+            {
+              flex: 1;
+              border: none;
+              outline: none;
+              font-size: 1rem;
+              font-family: inherit;
+              background: transparent;
+            }
+
+            .clear-btn
+            {
+              background: none;
+              border: none;
+              color: #aaa;
+              cursor: pointer;
+              font-size: 1rem;
+            }
+
+            .clear-btn:hover
+            {
+              color: var(--accent);
+            }
+
+
+
             .filter-buttons
             {
                 display: flex;
@@ -118,7 +193,7 @@ const Shop = () => {
                 box-shadow: var(--shadow);
             }
 
-            .product-card:img
+            .product-card img
             {
                 height:200px
             }
