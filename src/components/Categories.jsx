@@ -1,7 +1,11 @@
-import { categories } from "../data/data";
+import { categories, products } from "../data/data";
 import { Link } from "react-router-dom";
 
 const Categories = () => {
+  const getCount = (categoryName) => {
+    return products.filter((p) => p.category === categoryName).length;
+  };
+
   return (
     <section className="categories">
       <div className="container">
@@ -11,12 +15,16 @@ const Categories = () => {
 
         <div className="grid-4">
           {categories.map((cat) => (
-            <Link to="/shop" key={cat.id} className="category-card">
+            <Link
+              to={`/shop?category=${cat.name}`}
+              key={cat.id}
+              className="category-card"
+            >
               <div className="icon-wrapper" style={{ background: cat.color }}>
                 <i className={`fas ${cat.icon}`}></i>
               </div>
               <h3>{cat.name}</h3>
-              <p>12 Products</p>
+              <p>{getCount(cat.name)} Products</p>
             </Link>
           ))}
         </div>

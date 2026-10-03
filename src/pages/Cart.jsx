@@ -3,8 +3,14 @@ import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItems, removeFromCart, increaseQty, decreaseQty, totalPrice } =
-    useContext(CartContext);
+  const {
+    cartItems,
+    removeFromCart,
+    increaseQty,
+    decreaseQty,
+    totalPrice,
+    totalItems,
+  } = useContext(CartContext);
 
   if (cartItems.length === 0) {
     return (
@@ -95,7 +101,7 @@ const Cart = () => {
 
             <div className="summary-row">
               <span>Items</span>
-              <span>{cartItems.length}</span>
+              <span>{totalItems}</span>
             </div>
 
             <div className="summary-row">
@@ -121,14 +127,14 @@ const Cart = () => {
           .cart-page
           {
             padding: 40px 0;
-            background: var(--var);
+            background: var(--bg);
             min-height: 60vh;
           }
 
           .cart-layout
           {
             display: grid;
-            grid-template-columns: 2fre 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 30px;
           }
 
@@ -148,7 +154,7 @@ const Cart = () => {
             background: white;
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rbga(0,0,0,0.05)
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05)
           }
 
           .cart-item img
@@ -251,7 +257,7 @@ const Cart = () => {
           .cart-summary h3
           {
             margin-bottom: 20px;
-            padding: bottom: 15px;
+            padding-bottom: 15px;
             border-bottom: 2px solid var(--bg);
           }
 
@@ -281,18 +287,19 @@ const Cart = () => {
             align-items: center;
             justify-content: center;
             gap: 10px;
+            text-decoration: none;
           }
 
           @media(max-width: 768px)
           {
             .cart-layout
             {
-              grid-template-column: 1fr;
+              grid-template-columns: 1fr;
             }
 
             .cart-item
             {
-              grid-template-column: 80px 1fr;
+              grid-template-columns: 80px 1fr;
             }
 
             .cart-item img

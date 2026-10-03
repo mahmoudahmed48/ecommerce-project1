@@ -2,10 +2,18 @@ import { useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { products } from "../data/data";
 import { CartContext } from "../context/CartContext";
+import { ToastContext } from "../context/ToastContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
+
+  const { showToast } = useContext(ToastContext);
+
+  const handleAdd = (product) => {
+    addToCart(product);
+    showToast(`${product.name} added to cart!`);
+  };
 
   const product = products.find((p) => p.id === Number(id));
 
@@ -46,7 +54,7 @@ const ProductDetails = () => {
 
             <button
               className="btn add-cart-btn"
-              onClick={() => addToCart(product)}
+              onClick={() => handleAdd(product)}
             >
               <i className="fas fa-cart-plus"></i>
               Add To Cart

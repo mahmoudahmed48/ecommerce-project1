@@ -2,9 +2,16 @@ import { Link } from "react-router-dom";
 import { products } from "../data/data";
 import { CartContext } from "../context/CartContext";
 import { useContext } from "react";
+import { ToastContext } from "../context/ToastContext";
 
 const Products = () => {
   const { addToCart } = useContext(CartContext);
+  const { showToast } = useContext(ToastContext);
+
+  const handleAdd = (product) => {
+    addToCart(product);
+    showToast(`${product.name} added to cart!`);
+  };
 
   return (
     <section className="products">
@@ -13,7 +20,7 @@ const Products = () => {
           Featured <span>Products</span>
         </h2>
         <div className="grid-4">
-          {products.slice(0, 4).map((product) => (
+          {products.slice(0, 8).map((product) => (
             <div key={product.id} className="product-card">
               <Link to={`/product/${product.id}`}>
                 <img src={product.image} alt={product.name} />
@@ -26,7 +33,7 @@ const Products = () => {
                   <span className="price">${product.price.toFixed(2)}</span>
                   <button
                     className="add-btn"
-                    onClick={() => addToCart(product)}
+                    onClick={() => handleAdd(product)}
                   >
                     <i className="fas fa-cart-plus"></i>
                   </button>

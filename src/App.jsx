@@ -12,6 +12,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import OrderDetails from "./pages/OrderDetails";
+import NotFound from "./pages/NotFound";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -24,6 +27,8 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
 
         <Route
           path="/account"
@@ -60,6 +65,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

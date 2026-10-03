@@ -37,7 +37,7 @@ const Account = () => {
               {/* ADDED */}
               <Link to="/orders" className="acc-card">
                 <i className="fas fa-box"></i>
-                <h3>My Orders</h3>
+                <h4>My Orders</h4>
 
                 <p>View your orders history</p>
               </Link>
@@ -54,7 +54,7 @@ const Account = () => {
               </h3>
               <div className="empty-state">
                 <i className="fas fa-tools"></i>
-                <p>Comming soon...</p>
+                <p>Coming soon...</p>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@ const Account = () => {
                 border-radius: 10px;
                 box-shadow: var(--shadow);
                 text-align: center;
-                min-height: 70vh;
+                min-height: 300px;
             }
 
             .user-avatar
@@ -113,7 +113,7 @@ const Account = () => {
                 margin-bottom: 20px;
             }
 
-            .layout-btn
+            .logout-btn
             {
                 background: var(--accent);
                 width: 100%;
@@ -123,7 +123,7 @@ const Account = () => {
                 gap: 10px;
             }
 
-            .layout-btn:hover
+            .logout-btn:hover
             {
                 background: #c0392b;
             }

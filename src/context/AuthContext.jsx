@@ -24,14 +24,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = (name, email, password) => {
-    const newUSer = {
+    const newUser = {
       id: Date.now(),
       name: name,
       email: email,
     };
 
-    setUser(newUSer);
-    localStorage.setItem("user", JSON.stringify(newUSer));
+    setUser(newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
     return true;
   };
 

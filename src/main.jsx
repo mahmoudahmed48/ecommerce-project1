@@ -6,17 +6,22 @@ import { BrowserRouter } from "react-router-dom";
 import { CartProvider } from "./context/CartContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { OrderProvider } from "./context/OrderConext.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
+import { ToastProvider } from "./context/ToastContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <CartProvider>
-          <OrderProvider>
-            <App />
-          </OrderProvider>
-        </CartProvider>
-      </AuthProvider>
+      <ScrollToTop />
+      <ToastProvider>
+        <AuthProvider>
+          <CartProvider>
+            <OrderProvider>
+              <App />
+            </OrderProvider>
+          </CartProvider>
+        </AuthProvider>
+      </ToastProvider>
     </BrowserRouter>
   </StrictMode>,
 );

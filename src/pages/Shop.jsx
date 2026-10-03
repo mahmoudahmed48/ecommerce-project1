@@ -1,12 +1,29 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { categories, products } from "../data/data";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { ToastContext } from "../context/ToastContext";
 
 const Shop = () => {
   const { addToCart } = useContext(CartContext);
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
+
+  const { showToast } = useContext(ToastContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+
+  useEffect(() => {
+    const cat = searchParams.get("category");
+
+    if (cat) {
+      setFilter(cat);
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
+
+  // Filterd Products
 
   const filtered = products.filter((p) => {
     const matchCategory = filter === "All" || p.category === filter;
@@ -14,11 +31,49 @@ const Shop = () => {
     return matchCategory && matchSearch;
   });
 
+  // Pagination
+
+  const totalPages = Math.ceil(filtered.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const currentProducts = filtered.slice(
+    startIndex,
+    startIndex + productsPerPage,
+  );
+
+  // Category Handle
+  const handleCategoryChange = (cat) => {
+    setFilter(cat);
+    setCurrentPage(1);
+
+    if (cat === "All") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category: cat });
+    }
+  };
+
+  // Search Change
+  const handleSearch = (value) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
+
+  // Page Change
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    window.scrollTo(0, 0);
+  };
+
+  const handleAdd = (product) => {
+    addToCart(product);
+    showToast(`${product.name} added to cart!`);
+  };
+
   return (
     <section className="shop">
       <div className="container">
         <h2 className="section-title">
-          All <span>Products</span>
+          {filter === "All" ? "All" : filter} <span>Products</span>
         </h2>
 
         {/* Search Bar */}
@@ -29,11 +84,11 @@ const Shop = () => {
             type="text"
             placeholder="Search Products"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => handleSearch(e.target.value)}
           />
 
           {search && (
-            <button onClick={() => setSearch("")} className="clear-btn">
+            <button onClick={() => handleSearch("")} className="clear-btn">
               <i className="fas fa-times"></i>
             </button>
           )}
@@ -45,7 +100,7 @@ const Shop = () => {
         <div className="filter-buttons">
           <button
             className={filter === "All" ? "active" : ""}
-            onClick={() => setFilter("All")}
+            onClick={() => handleCategoryChange("All")}
           >
             All
           </button>
@@ -53,7 +108,7 @@ const Shop = () => {
             <button
               key={cat.id}
               className={filter === cat.name ? "active" : ""}
-              onClick={() => setFilter(cat.name)}
+              onClick={() => handleCategoryChange(cat.name)}
             >
               {cat.name}
             </button>
@@ -62,7 +117,7 @@ const Shop = () => {
 
         {/* Products Grid */}
         <div className="grid-4">
-          {filtered.map((product) => (
+          {currentProducts.map((product) => (
             <div key={product.id} className="product-card">
               <Link to={`/product/${product.id}`}>
                 <img src={product.image} alt={product.name} />
@@ -75,7 +130,7 @@ const Shop = () => {
                   <span className="price">${product.price.toFixed(2)}</span>
                   <button
                     className="add-btn"
-                    onClick={() => addToCart(product)}
+                    onClick={() => handleAdd(product)}
                   >
                     <i className="fas fa-cart-plus"></i>
                   </button>
@@ -87,6 +142,35 @@ const Shop = () => {
 
         {filtered.length === 0 && (
           <p className="no-products">No Products Found in This Category.</p>
+        )}
+
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="page-btn"
+            >
+              <i className="fas fa-chevron-left"></i>
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => goToPage(page)}
+                className={`page-btn ${currentPage === page ? "active" : ""}`}
+              >
+                {page}
+              </button>
+            ))}
+
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={totalPages}
+              className="page-btn"
+            >
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </div>
         )}
       </div>
 
@@ -172,7 +256,7 @@ const Shop = () => {
             }
 
             .filter-buttons button:hover,
-            .filter-buttons button:active
+            .filter-buttons button.active 
             {
                 background: var(--secondary);
                 color: white;
@@ -195,7 +279,9 @@ const Shop = () => {
 
             .product-card img
             {
-                height:200px
+                height:200px;
+                width: 100%;
+                object-fit: cover;
             }
 
             .product-info
@@ -253,6 +339,45 @@ const Shop = () => {
               color: #777;
               font-size: 1.1rem;
               margin-top: 30px
+            }
+
+            .pagination 
+            {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 8px;
+              margin-top: 40px;
+            }
+
+            .page-btn
+            {
+              min-width: 40px;
+              height: 40px;
+              border: 1px solid #ddd;
+              background: white;
+              color: var(--primary);
+              border-radius: 8px;
+              cursor: pointer;
+              font-size: 0.95rem;
+              font-weight: 500;
+              transition: 0.3s;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .page-btn:hover:not(:disabled)
+            {
+              border-color: var(--secondary);
+              color: var(--secondary);
+            }
+
+            .page-btn.active
+            {
+              border-color: var(--secondary);
+              color: white;
+              background: var(--secondary);
             }
 
 
